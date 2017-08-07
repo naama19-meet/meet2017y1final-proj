@@ -1,6 +1,8 @@
 import turtle
+basket = turtle.clone()
 
-turtle_pos = turtle.pos
+
+
 
 
 UP_EDGE = 300
@@ -12,11 +14,29 @@ SIZE_X=1000
 SIZE_Y=600
 
 
+basket.goto(0, -500)
+
+basket_pos = basket.pos()
+
+print(basket_pos[1])
+
 turtle.setup(SIZE_X, SIZE_Y)
 
-if turtle.pos <= DOWN_EDGE:
-    turtle.quit()
+if basket_pos[1] <= DOWN_EDGE:
+    print("yo")
+    quit()
 
-turtle.goto(0, -310)
+
+turtle.listen()
+
+quit()
+
+def move_basket():
+    my_pos=basket.pos()
+    x_pos=my_pos[0]
+    y_pos=my_pos[1]
+    TIME_STEP=100
+    turtle.ontimer(move_basket,TIME_STEP)
+
 
 
