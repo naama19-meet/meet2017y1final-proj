@@ -1,12 +1,12 @@
 import turtle
-
+import time
 turtle.tracer(1,0)
 
 SCREEN_HEIGHT = 600
 SCREEN_WIDTH = 1000
 turtle.setup(SCREEN_WIDTH,SCREEN_HEIGHT)
 SQUARE_SIZE = 20
-LENGHT= 10
+LENGHT= 4
 TIME_STEP = 100
 
 ##plat= turtle.clone()
@@ -34,7 +34,7 @@ for n in range(LENGHT):
     obj.showturtle()
     obj.shape("square")
     obj.goto(new_x, last_pos[1])
-    clones_l5ist.append(obj)
+    clones_list.append(obj)
     
     
 
@@ -76,13 +76,14 @@ turtle.listen()
 
 def move_plat():
     global clones_list
-    amount = 10
+    amount = 1
     if direction==LEFT:
         print(clones_list)
         for obj in clones_list:
             old_pos = obj.pos()
             obj.goto(old_pos[0] - (amount*SQUARE_SIZE), old_pos[1])
         print("you moved left!")
+        #time.sleep(.1)
 
     elif direction==RIGHT:
         for obj in clones_list:
@@ -91,6 +92,7 @@ def move_plat():
             obj.goto(old_pos[0] + (amount*SQUARE_SIZE), old_pos[1])
             print(obj.pos())
         print("you moved right!")
+        #time.sleep(0.1)
     
 ##    global direction
 ##    my_pos=plat.pos()
