@@ -154,8 +154,14 @@ def bounce(angle):
 
 score = 0 
 basket.left(angle)
+def distance(basket_pos,square_pos):
+        basket_x,basket_y = basket_pos
+        square_x,square_y = square_pos
+        d = ((basket_x-square_x)**2 + (basket_y-square_y)**2)**(1/2)
+        return d
+
 def move_basket():
-    global angle , score
+    global angle , score , obj_pos
     basket.forward(10)
 ##    b_x, b_y = basket.pos()
     #if basket.pos() in block.pos():
@@ -165,7 +171,19 @@ def move_basket():
     basket_pos = basket.pos()
     basket_x = basket_pos[0]
     basket_y = basket_pos[-1]
-
+    
+    for i in block_pos:
+        d = distance(basket.pos(),i)
+        if d < 20:
+            print("ddd")
+            angle = bounce(angle)
+    for i in :
+        d = distance(basket.pos(),i)
+        if d < 20:
+            print("ddd")
+            angle = bounce(angle)           
+            
+    
     if basket_x >= RIGHT_EDGE:
         angle = bounce(angle)
         #print('hello')
@@ -190,10 +208,11 @@ def move_basket():
     turtle.ontimer(move_basket,TIME_STEP)
 
         #score
+move_basket()
 turtle.goto(400,270)
 turtle.color("White")   
 turtle.write("score: " + str(score) , ("Arial" , "normal"))
-move_basket()
+
 
 ###eating the food
 
