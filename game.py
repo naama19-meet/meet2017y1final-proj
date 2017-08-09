@@ -88,12 +88,12 @@ turtle.register_shape("carbs.gif")
 turtle.register_shape("meat.gif")
 turtle.register_shape("yellowpepel (1).gif")
 #shapes = turtle.random("yellowpepel (1).gif" , "meat.gif" , "carbs.gif" , "apple (1).gif")
-#block.shape("apple (1).gif")
+block.shape("apple (1).gif")
 block.penup()
 
-block.shape("square")
-block.color("White")
-block.pencolor("Blue")
+##block.shape("square")
+##block.color("White")
+##block.pencolor("Blue")
 
 
 square_size = 20
@@ -101,18 +101,17 @@ square_size = 20
 # make the right turtle object
 block_stamper = turtle.clone()
 turtle.hideturtle()
-block_stamper.shape("square")
-block_stamper.color("White")
+block_stamper.shape("apple (1).gif")
 block_stamper.penup()
-block_stamper.goto(-315, 200)
+block_stamper.goto(-470, 200)
 
 # lists to keep track of positions and stamps
 block_pos = []
 block_stamps = []
 
 # loop variables
-start_x = -315
-end_x = 315
+start_x = -470
+end_x = 400
 start_y = 200
 
 # 30 blocks on one line
@@ -140,7 +139,7 @@ block.hideturtle()
 #the ball \ basket
 basket = turtle.clone()
 basket.showturtle()
-basket.goto(obj.pos())
+basket.goto(0,-200)
 turtle.register_shape("basket (1).gif")
 basket.shape("basket (1).gif")
 
@@ -163,31 +162,26 @@ def distance(basket_pos,square_pos):
 def move_basket():
     global angle , score , obj_pos
     basket.forward(10)
-##    b_x, b_y = basket.pos()
-    #if basket.pos() in block.pos():
-     #   score = score + 1
-      #  angle = bounce(angle)  
+    
 
     basket_pos = basket.pos()
     basket_x = basket_pos[0]
     basket_y = basket_pos[-1]
     
     for i in block_pos:
-        d = distance(basket.pos(),i)
-        if d < 20:
-            print("ddd")
-            angle = bounce(angle)
-    for i in :
-        d = distance(basket.pos(),i)
-        if d < 20:
-            print("ddd")
-            angle = bounce(angle)           
-            
+         d = distance(basket.pos(),i)
+         if d < 20:
+             print("ddd")
+             angle = bounce(angle)
+##            block_ind = block_pos.index(obj.pos()) #remove eaten food stamps
+##  s          block.clearstamp(block_stamps[block_ind])
+##            block_pos.pop(block_ind)
+##            block_stamps.pop(block_ind)       
     
     if basket_x >= RIGHT_EDGE:
         angle = bounce(angle)
         #print('hello')
-
+    
     if basket_x <= LEFT_EDGE:
         angle = bounce(angle)
 
@@ -204,42 +198,34 @@ def move_basket():
     if basket.pos() in block_pos:
         #block should disappear
         score = score + 1
-        bounce()
+        angle = bounce(angle)
     turtle.ontimer(move_basket,TIME_STEP)
 
         #score
 move_basket()
-turtle.goto(400,270)
-turtle.color("White")   
-turtle.write("score: " + str(score) , ("Arial" , "normal"))
-
-
+def scor():
+    turtle.goto(400,270)
+    turtle.color("White")   
+    turtle.write("score: " + str(score) , ("Arial" , "normal"))
+    turtle.ontimer(scor,TIME_STEP)
+scor()
 ###eating the food
+obj_x= obj.pos()[0]
+obj_y= obj.pos()[1]
+v1= (obj_x + LENGHT/2*SQUARE_SIZE, obj_y)
+v2= (obj_x - LENGHT/2*SQUARE_SIZE, obj_y)
+v3= (obj_x, obj_y + SQUARE_SIZE)
+v4= (obj_x, obj_y - SQUARE_SIZE)
 
+RIGHT_edge= obj_x + LENGHT/2*SQUARE_SIZE
+LEFT_edge= obj_x - LENGHT/2*SQUARE_SIZE
+UPPER_edge= obj_y + SQUARE_SIZE
+LOWER_edge= obj_y - SQUARE_SIZE
 
+basket_x= basket.pos()[0]
+basket_y= basket.pos()[1]
 
-
-
-
-
-
-
-
-
-
-
-
-
-###ball balance from walls
-
-
-
-
-
-
-
-
-
-
-
-
+if basket_x <= RIGHT_edge and basket_x >= LEFT_edge and basket_y <= UPPER_edge and basket_y >= LOWER_edge:
+    angle = bounce(angle)
+    
+    angle = bounce(angle)
