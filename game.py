@@ -8,21 +8,32 @@ block_pos = []
 block_stamps = []
 
 # the screen
-size_x = 1000
-size_y = 600
+size_x = 1400
+size_y = 1000
 turtle.setup(size_x , size_y)
-turtle.bgcolor("Black")
+turtle.bgcolor("White")
 SCREEN_HEIGHT = 600
 SCREEN_WIDTH = 1000
 SQUARE_SIZE = 20
 LENGHT= 6
-TIME_STEP = 100
+TIME_STEP = 25
 
-UP_EDGE = 300
-RIGHT_EDGE = 500
-LEFT_EDGE = -500
-DOWN_EDGE = -300
+UP_EDGE = 270
+RIGHT_EDGE = 470
+LEFT_EDGE = -470
+DOWN_EDGE = -270
 
+edge1=turtle.clone()
+
+edge1.penup()
+edge1.goto(510,290)
+edge1.pendown()
+edge1.goto(-510,290)
+edge1.goto(-510,-290)
+edge1.goto(510,-290)
+edge1.goto(510,290)
+turtle.penup()
+edge1.hideturtle()
 turtle.tracer(1,0)
 ###the platform
 
@@ -44,7 +55,7 @@ obj.resizemode('user')
 obj.shapesize(1,LENGHT,1)
 platform_height = -SCREEN_HEIGHT/2 + 50
 obj.goto(0, platform_height)
-obj.color("White")
+obj.color("Black")
     
 LEFT_ARROW = 'Left'
 RIGHT_ARROW= 'Right'
@@ -150,18 +161,18 @@ def bounce(angle):
     basket.right(-2*new_angle)
     return(new_angle)
 
-
-score = 0 
+bas_speed = 10
+ 
 basket.left(angle)
 def distance(basket_pos,square_pos):
         basket_x,basket_y = basket_pos
         square_x,square_y = square_pos
         d = ((basket_x-square_x)**2 + (basket_y-square_y)**2)**(1/2)
         return d
-
+score = 0
 def move_basket():
-    global angle , score , obj_pos
-    basket.forward(10)
+    global angle , obj_pos , score , bas_speed
+    basket.forward(bas_speed)
     
 
     basket_pos = basket.pos()
@@ -178,10 +189,13 @@ def move_basket():
              block_stamps.pop(block_index)
              
              angle = bounce(angle)
-##            block_ind = block_pos.index(obj.pos()) #remove eaten food stamps
-##            block.clearstamp(block_stamps[block_ind])
-##            block_pos.pop(block_ind)
-##            block_stamps.pop(block_ind)       
+             score = score +1
+             turtle.goto(360,250)
+             turtle.color("Black")
+             turtle.clear()
+             turtle.write("score: " + str(score) , font=("Arial",20, "normal"))
+             bas_speed = bas_speed + 0.3
+      
 
     # Hitting the platform
     obj_x= obj.pos()[0]
@@ -201,13 +215,16 @@ def move_basket():
         angle = bounce(angle)
     
     if basket_x >= RIGHT_EDGE:
+        #basket.goto(RIGHT_EDGE,basket_y)
         angle = bounce(angle)
         #print('hello')
     
     if basket_x <= LEFT_EDGE:
+        #basket.goto(LEFT_EDGE,basket_y)
         angle = bounce(angle)
 
     if basket_y >= UP_EDGE:
+        #basket.goto(basket_x,UP_EDGE)
         angle = bounce(angle)
 
     if obj.pos() == basket_y and basket_x:
@@ -218,20 +235,17 @@ def move_basket():
 
     # check if the basket hit any blocks
     if basket.pos() in block_pos:
-        #block should disappear
-        score = score + 1
         angle = bounce(angle)
+        
+                
     turtle.ontimer(move_basket,TIME_STEP)
 
         #score
 move_basket()
 
-def scor():
-    turtle.goto(400,270)
-    turtle.color("White")   
-    turtle.write("score: " + str(score) , ("Arial" , "normal"))
-    turtle.ontimer(scor,TIME_STEP)
-scor()
+
+
+
 ###eating the food
 ##obj_x= obj.pos()[0]
 ##obj_y= obj.pos()[1]
