@@ -54,7 +54,7 @@ RIGHT_EDGE = SCREEN_WIDTH/2
 
 LEFT=0
 RIGHT=1
-SPEED = 3
+SPEED = 2
 direction = LEFT
 
 def left():
